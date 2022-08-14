@@ -1,0 +1,91 @@
+
+//First Solution
+ALGORITHM algorithm_sum_S1
+VAR
+    tab1 : ARRAY_OF INTEGER[];
+    tab2 : ARRAY_OF INTEGER[];
+    i,j,SUM : INTEGER:=0;
+BEGIN
+
+    Write("Please enter the first Tab");
+    Read(tab1);
+    Write("Please enter the second Tab");
+    Read(tab2);
+FOR i FROM 0 TO tab1.length-1 STEP 1 DO 
+    test:=TRUE;
+    FOR j FROM  0 TO tab2.length-1 STEP 1 Do 
+    IF (tab1[i]=tab2[j]) THEN
+    test=FALSE;
+    END_IF
+    END_FOR
+IF (test=TRUE) THEN
+    SUM:=SUM+tab1[i];
+END_IF
+END_FOR
+
+
+FOR i FROM 0 TO tab2.length-1 STEP 1 DO 
+    test=TRUE;
+    FOR j FROM  0 TO tab1.length-1 STEP 1 Do 
+    IF (tab1[i]=tab2[j]) THEN
+    test=FALSE;
+    END_IF
+    END_FOR
+IF (test=TRUE) THEN
+    SUM:=SUM+tab2[i];
+END_IF
+
+END_FOR
+
+
+    write("Sum of overlapping elements is",Sum);
+
+END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//Second Solution
+
+
+ALGORITHM algorithm_sum_S2
+VAR
+    htab : HASH_TABLE<INTEGER,INTEGER>;
+    tab1 : ARRAY_OF INTEGER[];
+    tab2 : ARRAY_OF INTEGER[];
+    tab : ARRAY_OF INTEGER[];
+    i,SUM : INTEGER:=0;
+    count : INTEGER:=1;
+BEGIN
+
+    Write("Please enter the first Tab");
+    Read(tab1);
+    Write("Please enter the second Tab");
+    Read(tab2);
+    tab = tab1.concat(tab2);
+
+FOR i FROM 0 TO tab.length -1 STEP 1  DO
+    IF (htab.lookup(tab[i]) = TRUE) THEN
+    count := htab.get(tab[i]);
+    htab.insert(tab[i],count+1);
+    ELSE
+    htab.insert(tab[i],1);
+    END_IF
+
+    END_FOR
+
+FOR i FROM 0 TO tab.length -1 STEP 1  DO
+    IF (htab.get(tab[i]) = 1) THEN
+    SUM := SUM +tab[i];
+    END_IF
+    END_FOR
+
+    write("Sum of overlapping elements is",Sum);
+
+END
+
+
+
+
+
+
